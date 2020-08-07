@@ -147,7 +147,7 @@
                  [(or (and (num? v1) (bool? v2)) (and (bool? v1) (num? v2))) (bool #f)]
                  [#t error "NUMEX iseq applied to non-number and non-boolean"]))]
         [(ifnzero? e)
-         (let ([v1 eval-under-env (ifnzero-e1 e) end])
+         (let ([v1 (eval-under-env (ifnzero-e1 e) env)])
            (if (num? v1)
                (if (= (num-int v1) 0) (eval-under-env (ifnzero-e3 e) env) (eval-under-env (ifnzero-e2 e) env))
                (error "NUMEX ifnzero applied to non-number")))]
@@ -161,7 +161,36 @@
          ;(let ([v1 (eval-under-env (with-e1 e) env)])
           ; (if (string? (with-s e))
            ;    (eval-under-env (with-e2 e) (cons (cons (with-s e) v1) env))
-        
+        [(lam? e)
+         (if (and (or (string? (lam-nameopt e)) (null? (lam-nameopt e))) (string? (lam-formal e)))
+             (closure env e)
+             (error "NUMEX lam applied to non-string"))]
+        ;[(apply? e)
+         ;(let ([funclosure (eval-under-env (apply-funexp e) env)]
+               ;[actualpar (eval-under-env (apply-actual e) env)])
+           ;(if (closure? funclosure)
+               ;(eval-under-env (lam-body (closure-f funclosure))
+                               ;(if (null? (lam-nameopt (closure-f funclosure)))
+                                   ;(cons
+        [(1st? e)
+         (let ([v (eval-under-env (1st-e e) env)])
+           (if (apair? v)
+               (apair-e1 v)
+               (error "NUMEX 1st applied to a non-pair")))]
+        [(2nd? e)
+         (let ([v (eval-under-env (2nd-e e) env)])
+           (if (apair? v)
+               (apair-e2 v)
+               (error "NUMEX 2nd applied to a non-pair")))]
+        [(ismunit? e)
+         (let ([v (eval-under-env (ismunit-e e) env)])
+           (if (munit? v)
+               (bool #t)
+               (bool #f)))]
+        ;[(letrec? e)
+         ;(if (and (string? (letrec-s1 e)) (string? (letrec-s2 e)))
+             ;(let ([str1 (letrec-s1 e)] [str2 (letrec-s2 e)])
+               ;(eval-under-env (letrec-e3 e)
         [#t (error (format "bad NUMEX expression: ~v" e))]))
 
 ;; Do NOT change
