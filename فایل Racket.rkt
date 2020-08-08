@@ -17,6 +17,7 @@
 (struct minus (e1 e2)  #:transparent)
 (struct mult (e1 e2)  #:transparent)
 (struct div (e1 e2)  #:transparent)
+(struct neg (e)  #:transparent)
 (struct andalso (e1 e2)  #:transparent)
 (struct orelse (e1 e2)  #:transparent)
 (struct cnd (e1 e2 e3)  #:transparent)
@@ -43,6 +44,8 @@
 (struct extract (q) #:transparent) ;; it returns queue's top element
 
 (struct apair (e1 e2) #:transparent)
+(struct 1st (e) #:transparent)
+(struct 2nd (e) #:transparent)
 
 
 ;; Problem 1
