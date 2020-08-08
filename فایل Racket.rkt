@@ -51,7 +51,9 @@
                                          [(list? xs) (apair (car xs) (racketlist->numexlist (cdr xs)))]
                                          [#t error "racketlist->numexlist: input is not a list"])
 )
-(define (numexlist->racketlist xs) "CHANGE")
+(define (numexlist->racketlist xs) (cond [(munit? xs) null]
+                                         [(apair? xs) (cons (apair-e1 xs) (numexlist->racketlist (apair-e2 xs)))]
+                                         [#t error "numexlist->racketlist: input is not a list"]))
 
 ;; Problem 2
 
@@ -88,6 +90,9 @@
          e]
         [(munit? e)
          e]
+        [(apair? e)
+         (apair (eval-under-env (apair-e1 e) env)
+                (eval-under-env (apair-e2 e) env))]
         [(minus? e)
          (let ([v1 (eval-under-env (minus-e1 e) env)]
                [v2 (eval-under-env (minus-e2 e) env)])
@@ -114,6 +119,12 @@
                (num (quotient (num-int v1) (num-int v2)))
                )
                (error "NUMEX div applied to non-number")))]
+        
+        [(neg? e)
+         (let ([v (eval-under-env (neg-e e) env)])
+           (cond [(num? v) (num (* -1 (num-int v)))]
+                 [(bool? v) (bool (if (bool-boolean v) #f #t))]
+                 [else (error "NUMEX neg applied to non-number and non-boolean")]))]
         [(andalso? e)
          (let ([v1 (eval-under-env (andalso-e1 e) env)])
            (if (bool? v1)
@@ -157,21 +168,25 @@
            (if (and (num? v1) (num? v2))
                (if (> (num-int v1) (num-int v2)) (eval-under-env (ifleq-e4 e) env) (eval-under-env (ifleq-e3 e) env))
                (error "NUMEX ifleq applied to non-number")))]
-        ;[(with? e)
-         ;(let ([v1 (eval-under-env (with-e1 e) env)])
-          ; (if (string? (with-s e))
-           ;    (eval-under-env (with-e2 e) (cons (cons (with-s e) v1) env))
+        [(with? e)
+         (let ([v1 (eval-under-env (with-e1 e) env)])
+           (if (string? (with-s e))
+               (eval-under-env (with-e2 e) (cons (cons (with-s e) v1) env))
+               (error "NUMEX with applied to non-string")))]
         [(lam? e)
          (if (and (or (string? (lam-nameopt e)) (null? (lam-nameopt e))) (string? (lam-formal e)))
              (closure env e)
              (error "NUMEX lam applied to non-string"))]
-        ;[(apply? e)
-         ;(let ([funclosure (eval-under-env (apply-funexp e) env)]
-               ;[actualpar (eval-under-env (apply-actual e) env)])
-           ;(if (closure? funclosure)
-               ;(eval-under-env (lam-body (closure-f funclosure))
-                               ;(if (null? (lam-nameopt (closure-f funclosure)))
-                                   ;(cons
+        [(apply? e)
+         (let ([funclosure (eval-under-env (apply-funexp e) env)]
+               [actualpar (eval-under-env (apply-actual e) env)])
+           (if (closure? funclosure)
+               (eval-under-env (lam-body (closure-f funclosure))
+                               (if (null? (lam-nameopt (closure-f funclosure)))
+                                   (cons (cons (lam-formal (closure-f funclosure)) actualpar) (closure-env funclosure))
+                                   (cons (cons (lam-formal (closure-f funclosure)) actualpar)
+                                         (cons (cons (lam-nameopt (closure-f funclosure)) funclosure) (closure-env funclosure)))))
+               (error "NUMEX apply applied to non-function")))]
         [(1st? e)
          (let ([v (eval-under-env (1st-e e) env)])
            (if (apair? v)
@@ -187,10 +202,12 @@
            (if (munit? v)
                (bool #t)
                (bool #f)))]
-        ;[(letrec? e)
-         ;(if (and (string? (letrec-s1 e)) (string? (letrec-s2 e)))
-             ;(let ([str1 (letrec-s1 e)] [str2 (letrec-s2 e)])
-               ;(eval-under-env (letrec-e3 e)
+        [(letrec? e)
+         (if (and (string? (letrec-s1 e)) (string? (letrec-s2 e)))
+             (let ([str1 (letrec-s1 e)] [str2 (letrec-s2 e)])
+               (eval-under-env (letrec-e3 e) (cons (cons str2 (apply (letrec-e1 e))) (cons (cons str1 (apply (letrec-e1 e) (letrec-e2 e))) env))))
+             (error "NUMEX letrec applied to non-string"))]
+        
         [#t (error (format "bad NUMEX expression: ~v" e))]))
 
 ;; Do NOT change
