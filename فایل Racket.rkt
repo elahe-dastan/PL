@@ -151,7 +151,7 @@
         [(cnd? e)
          (let ([v1 (eval-under-env (cnd-e1 e) env)])
            (if (bool? v1)
-               (if (bool-boolean v1) (eval-under-env (cnd-e2 e) env) (eval-under-env (cnd-e3 3) env))
+               (if (bool-boolean v1) (eval-under-env (cnd-e2 e) env) (eval-under-env (cnd-e3 e) env))
                (error "NUMEX cnd applied to non-boolean")))]
         [(iseq? e)
          (let ([v1 (eval-under-env (iseq-e1 e) env)]
@@ -167,7 +167,7 @@
                (error "NUMEX ifnzero applied to non-number")))]
         [(ifleq? e)
          (let ([v1 (eval-under-env (ifleq-e1 e) env)]
-               [v2 (eval-under-env (ifleq-e2 3) env)])
+               [v2 (eval-under-env (ifleq-e2 e) env)])
            (if (and (num? v1) (num? v2))
                (if (> (num-int v1) (num-int v2)) (eval-under-env (ifleq-e4 e) env) (eval-under-env (ifleq-e3 e) env))
                (error "NUMEX ifleq applied to non-number")))]
