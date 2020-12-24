@@ -3,20 +3,21 @@ This repository contains my PL project
 
 ## Project explanation
 ### Overview
-This project has to do with NUMEX (Number-Expression ProgrammingLanguage). NUMEX programs are written directly in Racket by using the constructors defined by<br/>
-the structs defined at the beginning of project.rkt (Note: you must define missingones). Here is the definition of NUMEX's syntax:<br>
-• If 𝑠 is a Racket string, then (var 𝑠) is a NUMEX expression (variables).<br>
-• If 𝑛 is a Racket integer, then (num 𝑛) is a NUMEX expression (number constants).<br>
-• If 𝑏 is a Racket boolean, then (bool 𝑏) is a NUMEX expression (boolean constants).<br>
-• If 𝑒1 and 𝑒2 are NUMEX expressions, then (plus 𝑒1 𝑒2) is a NUMEX expression (addition).<br>
-• If 𝑒1 and 𝑒2 are NUMEX expressions, then (minus 𝑒1 𝑒2) is a NUMEX expression(subtraction).<br>
-• If 𝑒1 and 𝑒2 are NUMEX expressions, then (mult 𝑒1 𝑒2) is a NUMEX expression(multiplication).<br>
-• If 𝑒1 and 𝑒2 are NUMEX expressions, then (div 𝑒1 𝑒2) is a NUMEX expression (division).<br>
-• If 𝑒1is a NUMEX expression, then (neg 𝑒1) is a NUMEX expression (negation).<br>
-• If 𝑒1 and 𝑒2 are NUMEX expressions, then (andalso 𝑒1 𝑒2) is a NUMEX expression (logical conjunction).<br>
-• If 𝑒1 and 𝑒2 are NUMEX expressions, then (orelse 𝑒1 𝑒2) is a NUMEX expression (logical disjunction).<br>
-• If 𝑒1, 𝑒2, and 𝑒3 are NUMEX expressions, then (cnd 𝑒1 𝑒2 𝑒3) is a NUMEX expression. It is a condition where the result is 𝑒2 if 𝑒1 is true, else the result is 𝑒3<br>
-. Only one of 𝑒2 and 𝑒3 is evaluated.<br>
+This project has to do with NUMEX (Number-Expression ProgrammingLanguage). NUMEX programs are written directly in Racket by using the constructors defined by
+the structs defined at the beginning of project.rkt (Note: you must define missingones). Here is the definition of NUMEX's syntax:
+
+* If 𝑠 is a Racket string, then (var 𝑠) is a NUMEX expression (variables).
+* If 𝑛 is a Racket integer, then (num 𝑛) is a NUMEX expression (number constants).
+* If 𝑏 is a Racket boolean, then (bool 𝑏) is a NUMEX expression (boolean constants).
+* If 𝑒1 and 𝑒2 are NUMEX expressions, then (plus 𝑒1 𝑒2) is a NUMEX expression (addition).<br>
+* If 𝑒1 and 𝑒2 are NUMEX expressions, then (minus 𝑒1 𝑒2) is a NUMEX expression(subtraction).<br>
+* If 𝑒1 and 𝑒2 are NUMEX expressions, then (mult 𝑒1 𝑒2) is a NUMEX expression(multiplication).<br>
+* If 𝑒1 and 𝑒2 are NUMEX expressions, then (div 𝑒1 𝑒2) is a NUMEX expression (division).<br>
+* If 𝑒1is a NUMEX expression, then (neg 𝑒1) is a NUMEX expression (negation).<br>
+* If 𝑒1 and 𝑒2 are NUMEX expressions, then (andalso 𝑒1 𝑒2) is a NUMEX expression (logical conjunction).<br>
+* If 𝑒1 and 𝑒2 are NUMEX expressions, then (orelse 𝑒1 𝑒2) is a NUMEX expression (logical disjunction).<br>
+* If 𝑒1, 𝑒2, and 𝑒3 are NUMEX expressions, then (cnd 𝑒1 𝑒2 𝑒3) is a NUMEX expression. It is a condition where the result is 𝑒2 if 𝑒1 is true, else the result is 𝑒3<br>
+* Only one of 𝑒2 and 𝑒3 is evaluated.<br>
 • If 𝑒1 and 𝑒2 are NUMEX expressions, then (iseq 𝑒1 𝑒2) is a NUMEX expression.(comparison).<br>
 • If 𝑒1, 𝑒2, and 𝑒3 are NUMEX expressions, then (ifnzero 𝑒1 𝑒2 𝑒3) is a NUMEX expression.It is a condition where the result is 𝑒2 if 𝑒1<br>
 is not zero, else the result is 𝑒3<br>
