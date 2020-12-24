@@ -18,43 +18,41 @@ the structs defined at the beginning of project.rkt (Note: you must define missi
 * If 𝑒1 and 𝑒2 are NUMEX expressions, then (orelse 𝑒1 𝑒2) is a NUMEX expression (logical disjunction).<br>
 * If 𝑒1, 𝑒2, and 𝑒3 are NUMEX expressions, then (cnd 𝑒1 𝑒2 𝑒3) is a NUMEX expression. It is a condition where the result is 𝑒2 if 𝑒1 is true, else the result is 𝑒3<br>
 * Only one of 𝑒2 and 𝑒3 is evaluated.<br>
-• If 𝑒1 and 𝑒2 are NUMEX expressions, then (iseq 𝑒1 𝑒2) is a NUMEX expression.(comparison).<br>
-• If 𝑒1, 𝑒2, and 𝑒3 are NUMEX expressions, then (ifnzero 𝑒1 𝑒2 𝑒3) is a NUMEX expression.It is a condition where the result is 𝑒2 if 𝑒1<br>
+* If 𝑒1 and 𝑒2 are NUMEX expressions, then (iseq 𝑒1 𝑒2) is a NUMEX expression.(comparison).<br>
+* If 𝑒1, 𝑒2, and 𝑒3 are NUMEX expressions, then (ifnzero 𝑒1 𝑒2 𝑒3) is a NUMEX expression.It is a condition where the result is 𝑒2 if 𝑒1<br>
 is not zero, else the result is 𝑒3<br>
-. Only one of𝑒2 and 𝑒3 is evaluated.
-• If 𝑒1, 𝑒2, 𝑒3, and 𝑒4 are NUMEX expressions, then (ifleq 𝑒1 𝑒2 𝑒3 𝑒4) is a NUMEXexpression. It is a conditional where the result is 𝑒4 if 𝑒1<br>
+* Only one of𝑒2 and 𝑒3 is evaluated.
+* If 𝑒1, 𝑒2, 𝑒3, and 𝑒4 are NUMEX expressions, then (ifleq 𝑒1 𝑒2 𝑒3 𝑒4) is a NUMEXexpression. It is a conditional where the result is 𝑒4 if 𝑒1<br>
 is strictly greater than 𝑒2, else the result is 𝑒3<br>
-. Only one of 𝑒3 and 𝑒4 is evaluated.<br>
-• If 𝑠1 and 𝑠2 are Racket strings and 𝑒 is a NUMEX expression, then (lam 𝑠1 𝑠2 𝑒) is a NUMEX expression (a function). In 𝑒, 𝑠1<br>
+* Only one of 𝑒3 and 𝑒4 is evaluated.<br>
+* If 𝑠1 and 𝑠2 are Racket strings and 𝑒 is a NUMEX expression, then (lam 𝑠1 𝑠2 𝑒) is a NUMEX expression (a function). In 𝑒, 𝑠1<br>
 is bound to the function itself (for recursion) and 𝑠2 is bound to the only argument. Also, (lam null 𝑠2 𝑒) is allowed for anonymous nonrecursive functions.<br>
-• If 𝑒1 and 𝑒2 are NUMEX expressions, then (apply 𝑒1 𝑒2) is a NUMEX expression (function application).<br>
-• If 𝑠 is a Racket string, and 𝑒1 and 𝑒2 are NUMEX expressions, then (with 𝑠 𝑒1 𝑒2) is a NUMEX expression (a let expression where the value of 𝑒1 is bound to<br>
+* If 𝑒1 and 𝑒2 are NUMEX expressions, then (apply 𝑒1 𝑒2) is a NUMEX expression (function application).<br>
+* If 𝑠 is a Racket string, and 𝑒1 and 𝑒2 are NUMEX expressions, then (with 𝑠 𝑒1 𝑒2) is a NUMEX expression (a let expression where the value of 𝑒1 is bound to<br>
 𝑠 in 𝑒2).<br>
-• If 𝑒1 and 𝑒2 are NUMEX expressions, then (apair 𝑒1 𝑒2) is a NUMEX expression (pair constructor).<br>
-• If 𝑒1 is a NUMEX expression, then (1st 𝑒1) is a NUMEX expression (the first part of a pair).<br>
-• If 𝑒1 is a NUMEX expression, then (2nd 𝑒1) is a NUMEX expression (the second part of a pair).<br>
-• (munit) is a NUMEX expression (holding no data, much like () in ML or null in Racket).Notice (munit) is a NUMEX expression, but munit is not.<br>
-• If 𝑒1
-is a NUMEX expression, then (ismunit 𝑒1
-) is a NUMEX expression (testing for
-(munit)).
-• (closure 𝑒𝑛𝑣 𝑓) is a NUMEX value where 𝑓 is a NUMEX function and 𝑒𝑛𝑣 is an
+* If 𝑒1 and 𝑒2 are NUMEX expressions, then (apair 𝑒1 𝑒2) is a NUMEX expression (pair constructor).<br>
+* If 𝑒1 is a NUMEX expression, then (1st 𝑒1) is a NUMEX expression (the first part of a pair).<br>
+* If 𝑒1 is a NUMEX expression, then (2nd 𝑒1) is a NUMEX expression (the second part of a pair).<br>
+* (munit) is a NUMEX expression (holding no data, much like () in ML or null in Racket).Notice (munit) is a NUMEX expression, but munit is not.<br>
+* If 𝑒1
+is a NUMEX expression, then (ismunit 𝑒1) is a NUMEX expression (testing for (munit)).
+* (closure 𝑒𝑛𝑣 𝑓) is a NUMEX value where 𝑓 is a NUMEX function and 𝑒𝑛𝑣 is an
 environment that maps variables to values. Closures do not appear in programs; they
 result from evaluating functions.
-• If 𝑠1 is a Racket string and 𝑠2 is a Racket string and 𝑠3 is a Racket string and 𝑒1 is a
+* If 𝑠1 is a Racket string and 𝑠2 is a Racket string and 𝑠3 is a Racket string and 𝑒1 is a
 NUMEX expression and 𝑒2 is NUMEX expression and 𝑒3 is a NUMEX expression and
 𝑒4 is NUMEX expression, then (letrec 𝑠1 𝑒1 𝑠2 𝑒2 𝑠3 𝑒3 𝑒4) is a NUMEX expression (a
 letrec expression for recursive definitions where the the value of 𝑒1 is bound to 𝑠1 and
 the value of 𝑒2 is bound to 𝑠2 and the value of 𝑒3 is bound to 𝑠3 in the 𝑒4).
-• If e is a NUMEX expression and m is a NUMEX munit, then (queue e m) is a NUMEX
+* If e is a NUMEX expression and m is a NUMEX munit, then (queue e m) is a NUMEX
 expression. If e is a NUMEX expression and q is a NUMEX queue, then (queue e q) is a
 NUMEX expression (queue constructor).
-• If e is a NUMEX expression and q is a NUMEX queue, then (enqueue e q) is a NUMEX
+* If e is a NUMEX expression and q is a NUMEX queue, then (enqueue e q) is a NUMEX
 expression (queue after enqueue expression into queue). If q is a NUMEX queue, then
 (dequeue q) is a NUMEX expression (queue after dequeue expression from queue).
-• If q is a NUMEX queue, then (extract q) is a NUMEX expression (top expression in
+* If q is a NUMEX queue, then (extract q) is a NUMEX expression (top expression in
 queue).
-Page 3 of 6
+
 A NUMEX 𝑣𝑎𝑙𝑢𝑒 is a NUMEX number constant, a NUMEX boolean constant, a NUMEX closure, a
 NUMEX munit, or a NUMEX pair of NUMEX values. Similar to Racket, we can build list values out
 of nested pair values that end with a NUMEX munit. Such a NUMEX value is called a NUMEX list.
